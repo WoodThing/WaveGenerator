@@ -142,19 +142,10 @@ private:
           } else { cout << "File cannot be opened." << endl; }
       }
     }
-};
-
   void uploadToGitHub() {
-  
-  system("git init");
-  system("git add sine_wave.csv square_wave.csv"); 
-  system("git commit -m \"Add waveform data\"");
-  system("git remote add origin https://github.com/WoodThing/Wave_Files");
-  system("git branch -M main");
-  system("git push -u origin main");
-
-  cout << "\nData uploaded to GitHub." << endl;
-  }
+    
+    }
+};
 
 int main() {
 
