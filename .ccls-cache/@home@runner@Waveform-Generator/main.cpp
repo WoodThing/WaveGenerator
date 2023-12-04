@@ -29,7 +29,6 @@ public:
         waveSelect();
         parameters();
         wave();
-        uploadToGitHub();
     }
 
 private:
@@ -141,10 +140,21 @@ private:
           cout << "\nWave successfully generated.";
           } else { cout << "File cannot be opened." << endl; }
       }
+    commitAndPush();
     }
-  void uploadToGitHub() {
-    
-    }
+  void commitAndPush() {
+  // Set Git identity 
+  system("git config --global user.email \"el22a2w@leeds.ac.uk\"");
+  system("git config --global user.name \"WoodThing\"");
+    // Commit changes
+  system("git add sine_wave.csv square_wave.csv");
+    // Optionally, exclude unnecessary files
+  system("git reset .ccls-cache/ main");
+  system("git commit -m \"Update sine_wave\"");
+    // Push changes to GitHub
+  system("git push origin main");
+}
+
 };
 
 int main() {
