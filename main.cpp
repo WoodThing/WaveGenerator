@@ -6,7 +6,7 @@
 using namespace std; 
 
 const double pi = 3.14159;
-const double sampleSpeed = 4410;
+const double sampleSpeed = 441;
 
 class WaveGenerator {
 private:
