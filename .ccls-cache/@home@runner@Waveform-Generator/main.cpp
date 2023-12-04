@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <limits>
+#include <cstdlib>
 
 using namespace std; 
 
@@ -110,50 +111,42 @@ private:
     }
   void wave() {
     if (selectBit == 1) {
-      ofstream file("sine_wave.csv");
-      if (file.is_open()) {
+      ofstream CSVfile("sine_wave.csv");
+      ofstream MATfile("sine_wave.mat");
+      if (CSVfile.is_open() && MATfile.is_open()) {
         
         double step = 1.0 / sampleSpeed;
-        for (double t = 0.0; t <= duration; t += step) {
+        for (double t = 0.0; t < duration; t += step) {
           double magnitude = (Vmax * sin((2 * pi * freq * t) + ((phase * pi)/180))) + offset;
-          file << t << "," << magnitude << endl;
+          CSVfile << t << " " << magnitude << endl;
+          MATfile << t << " " << magnitude << endl;
           }
-        file.close();
+        CSVfile.close();
+        MATfile.close();
         cout << "\nWave successfully generated.";
         } 
       else { cout << "File cannot be opened." << endl; }
     } 
       else if (selectBit == 2) {
-        ofstream file("square_wave.csv");
-        if (file.is_open()) {
+        ofstream CSVfile("square_wave.csv");
+        ofstream MATfile("square_wave.mat");
+        if (CSVfile.is_open() && MATfile.is_open()) {
          
           double step = 1.0 / sampleSpeed;
-            for (double t = 0.0; t <= duration; t += step) {
+            for (double t = 0.0; t < duration; t += step) {
             double value = (Vmax * sin((2 * pi * freq * t) + ((phase * pi)/180))) + offset;
             double magnitude = (value >= offset + Vmax - (Vmax * dutyRatio)/50) ? Vmax + offset : -Vmax + offset;
-            file << t << "," << magnitude << endl;
+            CSVfile << t << " " << magnitude << endl;
+            MATfile << t << " " << magnitude << endl;
             }
-          double value = (Vmax * sin((2 * pi * freq * duration) + ((phase * pi)/180))) + offset;
-          double magnitude = (value >= offset + Vmax - (Vmax * dutyRatio)/50) ? Vmax + offset : -Vmax + offset;
-          file << duration << "," << magnitude << endl;
-          file.close();
+          CSVfile.close();
+          MATfile.close();
           cout << "\nWave successfully generated.";
-          } else { cout << "File cannot be opened." << endl; }
+          } 
+        else { cout << "File cannot be opened." << endl; }
       }
-    commitAndPush();
+    
     }
-  void commitAndPush() {
-  // Set Git identity 
-  system("git config --global user.email \"el22a2w@leeds.ac.uk\"");
-  system("git config --global user.name \"WoodThing\"");
-    // Commit changes
-  system("git add sine_wave.csv square_wave.csv");
-    // Optionally, exclude unnecessary files
-  system("git reset .ccls-cache/ main");
-  system("git commit -m \"Update sine_wave\"");
-    // Push changes to GitHub
-  system("git push origin main");
-}
 
 };
 
